@@ -1,10 +1,17 @@
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
-import { reducer as contactsReducer } from './contacts/contacts.slice';
+import { api } from '../api';
+import { createLogger } from 'redux-logger';
+
+const logger = createLogger({
+    collapsed: true
+});
 
 const reducers = combineReducers({
-  contacts: contactsReducer
-})
+  [api.reducerPath]: api.reducer,
+});
 
 export const store = configureStore({
-  reducer: reducers
+  reducer: reducers,
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware().concat(api.middleware).concat(logger),
 });
