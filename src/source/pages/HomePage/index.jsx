@@ -2,7 +2,6 @@ import { CreateContact } from '../../components/CreateContact';
 import { Contacts } from '../../components/Contacts';
 
 export const HomePage = () => {
-  console.log(process.env.NODE_ENV)
   return (
     <div className="relative min-h-screen bg-gray-300">
       <div className="absolute inset-0 z-0 bg-gray-300" />

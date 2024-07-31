@@ -5,7 +5,7 @@ export const CreateContact = () => {
   const { register, handleSubmit, formState: { errors }, setError, clearErrors } = useForm();
   const [createContact] = useCreateContactMutation();
 
-  const onSubmit = data => {
+  const onSubmit = async (data) => {
     if (!data.firstName && !data.lastName) {
       setError("firstName", { type: "manual", message: "Either first name or last name must be filled" });
       setError("lastName", { type: "manual", message: "Either first name or last name must be filled" });
@@ -31,14 +31,12 @@ export const CreateContact = () => {
       owner_id: null,
     };
 
-    createContact(contactData)
-      .unwrap()
-      .then(() => {
-        console.log('Contact created');
-      })
-      .catch((error) => {
-        console.error('Failed to create contact', error);
-      });
+    try {
+      await createContact(contactData);
+      console.log('Contact created');
+    } catch (err) {
+      console.error('Failed to create contact:', err);
+    }
   };
 
   return (
