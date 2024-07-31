@@ -1,7 +1,7 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import root from './config'
 
-const token = 'VlP9cwH6cc7Kg2LsNPXpAvF6QNmgZn';
+const token = import.meta.env.VITE_API_KEY;
 
 export const api = createApi({
   reducerPath: 'api',
