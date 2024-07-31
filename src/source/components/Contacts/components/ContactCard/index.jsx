@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import { useRemoveContactMutation } from "../../../../api";
 
 export const ContactCard = ({ data }) => {
-  const { avatar_url = '', fields = {}, tags2, id } = data;
+  const { avatar_url = '', fields = {}, tags2 = [], id = '' } = data;
 
   const getFullName = `${fields['first name']?.[0]?.value} ${fields['last name']?.[0]?.value}`;
   const getEmail = `${fields['email']?.[0]?.value}`;
@@ -21,7 +21,7 @@ export const ContactCard = ({ data }) => {
   };
 
   return (
-    <li className="p-4 border rounded-lg shadow-lg bg-white min-w-sm w-[75%] mx-auto relative">
+    <li className="p-4 border rounded-lg shadow-lg bg-white min-w-sm w-full md:w-[75%] mx-auto relative">
       <Link to={`contact/${id}`}>
         <div className="flex items-center">
           <img
@@ -46,13 +46,13 @@ export const ContactCard = ({ data }) => {
             ))}
           </div>
         )}
-        <button
-          className="absolute top-2 right-2 text-gray-500 hover:text-gray-700"
-          onClick={onDelete}
-        >
-          <span className="material-icons">delete</span>
-        </button>
       </Link>
+      <button
+        className="absolute top-2 right-2 text-gray-500 hover:text-gray-700"
+        onClick={onDelete}
+      >
+        <span className="material-icons">delete</span>
+      </button>
     </li>
   )
 }

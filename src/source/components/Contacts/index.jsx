@@ -17,8 +17,8 @@ export const Contacts = () => {
   ));
 
   return (
-    <div>
-      <h3 className="text-lg font-bold mb-4">Contacts</h3>
+    <div className='w-full'>
+      <h3 className="text-xl font-bold mb-4 min-w-sm w-full md:w-[75%] mx-auto">Contacts</h3>
       <ul className='flex flex-col gap-4'>{cardsJSX}</ul>
     </div>
   );

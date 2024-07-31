@@ -3,7 +3,7 @@ import { api } from '../api';
 import { createLogger } from 'redux-logger';
 
 const logger = createLogger({
-    collapsed: true
+  collapsed: true
 });
 
 const reducers = combineReducers({
@@ -12,6 +12,5 @@ const reducers = combineReducers({
 
 export const store = configureStore({
   reducer: reducers,
-  middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware().concat(api.middleware).concat(logger),
+  middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(api.middleware).concat(logger),
 });

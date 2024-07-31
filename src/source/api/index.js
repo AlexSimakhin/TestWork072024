@@ -30,10 +30,10 @@ export const api = createApi({
       }),
       invalidatesTags: () => [{type: 'Contacts'}]
     }),
-    updateContact: builder.mutation({
-      query: (contact) => ({
-        body: contact,
-        url: '/contact',
+    updateTagsContact: builder.mutation({
+      query: ({id, tags}) => ({
+        body: tags,
+        url: `/contacts/${id}/tags`,
         method: 'PUT'
       }),
       invalidatesTags: () => [{type: 'Contacts'}]
@@ -48,4 +48,4 @@ export const api = createApi({
   })
 })
 
-export const { useGetContactsQuery, useGetContactQuery, useCreateContactMutation, useUpdateContactMutation, useRemoveContactMutation } = api;
+export const { useGetContactsQuery, useGetContactQuery, useCreateContactMutation, useUpdateTagsContactMutation, useRemoveContactMutation } = api;
