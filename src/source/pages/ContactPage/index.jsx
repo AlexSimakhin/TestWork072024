@@ -13,7 +13,7 @@ export const ContactPage = () => {
     return (
       <div className="flex justify-center items-center min-h-screen bg-gray-100">
         <div className="flex items-center">
-          <svg className="w-16 h-16 text-blue-500 animate-spin" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <svg className="w-16 h-16 text-blue-500 animate-spin" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" data-testid="loading-spinner">
             <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
             <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 1116 0A8 8 0 014 12z"></path>
           </svg>
@@ -30,42 +30,32 @@ export const ContactPage = () => {
   const getEmail = `${fields['email']?.[0]?.value || ''}`;
 
   const parseTags = (tagsString) => {
-    const regex = /(?:[^,\"]|\.|"(?:\.|[^"])*")+/g;
-    const tags = [];
-    let match;
-  
-    while ((match = regex.exec(tagsString)) !== null) {
-      const tag = match[0].trim().replace(/^"|"$/g, '').replace(/\,/g, ',');
-      if (tag) {
-        tags.push(tag);
-      }
-    }
-  
-    return tags;
+    if (!tagsString) return [];
+    return tagsString.trim().split(',').map(tag => tag.trim()).filter(tag => tag.length > 0);
   };
-
-  const onSubmit = (formData) => {
+  
+  const onSubmit = async (formData) => {
     const newTags = parseTags(formData.tags);
-
+  
     if (newTags.length > 5) {
       setError('tags', { type: 'manual', message: 'Maximum 5 tags are allowed.' });
       return;
     }
-
-    updateTagsContact({
-      id: idRecord,
-      tags: {
-        tags: [...newTags, ...tags2],
-      }
-    }).unwrap().then(() => {
-      console.log('Contact updated');
+  
+    try {
+      await updateTagsContact({
+        id: idRecord,
+        tags: {
+          tags: [...newTags, ...tags2],
+        }
+      });
+      console.log('Tags added');
       reset();
-    })
-    .catch((error) => {
-      console.error('Failed to add tags', error);
-    });
+    } catch (err) {
+      console.error('Failed to add tags:', err);
+    }
   };
-
+  
   return (
     <div className="relative flex justify-center items-center  min-h-screen bg-gray-100">
       {!data ? <p>No contact found</p> : (
@@ -96,10 +86,10 @@ export const ContactPage = () => {
               </div>
             </div>
           )}
-          <form onSubmit={handleSubmit(onSubmit)} className="space-y-4 mt-12">
+          <form onSubmit={handleSubmit(onSubmit)} className="space-y-4 mt-12" role='form'>
             <div className="flex flex-col">
               <label htmlFor="tags" className="mb-2 text-gray-700">
-                Add Tags (comma separated; use backslash to escape commas inside tags)
+                Add Tags (comma separated)
               </label>
               <input
                 id="tags"

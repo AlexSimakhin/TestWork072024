@@ -2,7 +2,7 @@ import { useForm } from "react-hook-form";
 import { useCreateContactMutation } from "../../api";
 
 export const CreateContact = () => {
-  const { register, handleSubmit, formState: { errors }, setError, clearErrors } = useForm();
+  const { register, handleSubmit, formState: { errors }, reset, setError, clearErrors } = useForm();
   const [createContact] = useCreateContactMutation();
 
   const onSubmit = async (data) => {
@@ -34,6 +34,7 @@ export const CreateContact = () => {
     try {
       await createContact(contactData);
       console.log('Contact created');
+      reset();
     } catch (err) {
       console.error('Failed to create contact:', err);
     }

@@ -18,7 +18,6 @@ describe('CreateContact', () => {
   it('shows error message when both first name and last name are empty', async () => {
     render(<CreateContact />);
     fireEvent.submit(screen.getByRole('button', { name: /Add Contact/i }));
-    // Измените текст ошибки на существующий
     expect(await screen.findByText(/Email is required/i)).toBeInTheDocument();
   });
 

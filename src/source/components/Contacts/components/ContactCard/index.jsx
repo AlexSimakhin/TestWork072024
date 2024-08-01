@@ -9,15 +9,13 @@ export const ContactCard = ({ data }) => {
 
   const [removeContact] = useRemoveContactMutation();
 
-  const onDelete = () => {
-    removeContact(id)
-      .unwrap()
-      .then(() => {
-        console.log('Contact removed');
-      })
-      .catch((error) => {
-        console.error('Failed to remove contact', error);
-      });
+  const onDelete = async () => {
+    try {
+      await removeContact(id);
+      console.log('Contact removed');
+    } catch (err) {
+      console.error('Failed to remove contact:', err);
+    }
   };
 
   return (
